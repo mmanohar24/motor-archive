@@ -24,6 +24,16 @@ router.post('/decode', async (req, res) => {
                 const vehicleType = result.Results.find(item => item.Variable === "Vehicle Type")?.Value;
                 const bodyClass = result.Results.find(item => item.Variable === "Body Class")?.Value;
 
+                const engineCylinders = result.Results.find(item => item.Variable === "Engine Number of Cylinders")?.Value;
+                const engineDisplacement = result.Results.find(item => item.Variable === "Displacement (L)")?.Value;
+                const fuelType = result.Results.find(item => item.Variable === "Fuel Type - Primary")?.Value;
+                const transmission = result.Results.find(item => item.Variable === "Transmission Style")?.Value;
+                const driveType = result.Results.find(item => item.Variable === "Drive Type")?.Value;
+                const doors = result.Results.find(item => item.Variable === "Number of Doors")?.Value;
+                const manufacturer = result.Results.find(item => item.Variable === "Manufacturer Name")?.Value;
+                const plantCountry = result.Results.find(item => item.Variable === "Plant Country")?.Value;
+                const horsepower = result.Results.find(item => item.Variable === "Engine Brake (hp) From")?.Value;
+
                 return res.json(
                     {
                         make,
@@ -31,7 +41,16 @@ router.post('/decode', async (req, res) => {
                         modelYear,
                         trim,
                         vehicleType,
-                        bodyClass
+                        bodyClass,
+                        engineCylinders,
+                        engineDisplacement,
+                        fuelType,
+                        transmission,
+                        driveType,
+                        doors,
+                        manufacturer,
+                        plantCountry,
+                        horsepower
                     });
             }
         }

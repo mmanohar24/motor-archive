@@ -1,0 +1,21 @@
+.checkVINForm {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+.checkVINForm input {
+    padding: 12px;
+    border: 1px solid purple;
+    border-radius: 6px;
+}
+
+.checkVINForm-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    background-color: purple;
+}
