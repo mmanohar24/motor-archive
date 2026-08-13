@@ -1,11 +1,9 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 
 import "../CSS/CheckVin.css"
 import { useState } from "react";
-
-
+import { decodeVIN } from "../services/carServices";
 
 function CheckVin() {
 
@@ -30,25 +28,22 @@ function CheckVin() {
         {
             initialValues: INITIAL_STATE,
             validationSchema: validateSchema,
-            // onSubmit: (values => { console.log(values) })
 
-            onSubmit: (
-                (async (values) => {
-                    setLoading(true)
+            onSubmit: async (values) => {
+                setLoading(true)
+                setError(null)
 
-                    try {
-                        const response = await axios.post(`/api/cars/decode`, { VIN: values.vin })
-                        const results = response.data;
-                        setResult(results);
-                        setLoading(false)
-                    }
-                    catch (error) {
-                        setError(error.response?.data?.message || 'Something went wrong')
-                        setLoading(false)
-                    }
+                try {
+                    const data = await decodeVIN(values.vin);
+                    setResult(data);
                 }
-                )
-            )
+                catch (error) {
+                    setError(error.message || 'Something went wrong')
+                }
+                finally {
+                    setLoading(false)
+                }
+            }
         }
     )
 
