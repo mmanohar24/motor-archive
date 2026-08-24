@@ -1,7 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import "../CSS/CheckVin.css"
 import { useState } from "react";
 import { decodeVIN } from "../services/carServices";
 import VinResult from "./VinResult";
@@ -79,11 +78,11 @@ function CheckVin() {
 
             <div className="w-1/2">
                 <form
-                    className="checkVINForm"
+                    className="flex flex-col gap-3 w-full"
                     onSubmit={formik.handleSubmit}
                 >
 
-                    <label htmlFor="vin"> Enter VIN </label>
+                    {/* <label htmlFor="vin"> Enter VIN </label> */}
                     <input
                         id="vin"
                         type="text"
@@ -92,6 +91,7 @@ function CheckVin() {
                         value={formik.values.vin}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-700"
                     />
 
                     {
@@ -101,8 +101,8 @@ function CheckVin() {
                     }
 
                     <button
-                        className="checkVINForm-btn"
                         type="submit"
+                        className="w-full bg-purple-700 text-white py-3 rounded-lg hover:bg-purple-800 transition-colors font-medium"
                     > Check VIN </button>
 
                 </form>
@@ -123,7 +123,9 @@ function CheckVin() {
 
                 {
                     result && (
-                        <button onClick={() => setIsModalOpen(true)}> Save this car </button>
+                        <button
+                            className="mt-4 bg-purple-700 text-white py-2 px-6 rounded-lg hover:bg-purple-800 transition-colors"
+                            onClick={() => setIsModalOpen(true)}> Save this car </button>
                     )
                 }
 
