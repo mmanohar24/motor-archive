@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import "../CSS/CheckVin.css"
 import { useState } from "react";
 import { decodeVIN } from "../services/carServices";
+import VinResult from "./VinResult";
 
 function CheckVin() {
 
@@ -89,7 +90,9 @@ function CheckVin() {
             }
 
             {
-                result && <p> {result.make} {result.model} {result.modelYear} </p>
+                // result && <p> {result.make} {result.model} {result.modelYear} </p>
+
+                result && <VinResult results={result} />
             }
         </div>
     )
