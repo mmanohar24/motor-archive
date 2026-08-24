@@ -66,60 +66,71 @@ function CheckVin() {
     )
 
     return (
-        <div className="checkVIN bg-white min-h-screen">
-            <h1> Welcome to VIN Check page </h1>
+        <div className="checkVIN bg-white min-h-screen flex gap-8 px-8 pt-8 items-start justify-between">
 
-            <form
-                className="checkVINForm"
-                onSubmit={formik.handleSubmit}
-            >
+            <div className="w-1/2">
+                <h1 className="text-4xl font-bold mb-4"> Know exactly about what you're buying </h1>
 
-                <label htmlFor="vin"> Enter VIN </label>
-                <input
-                    id="vin"
-                    type="text"
-                    name="vin"
-                    placeholder="Enter VIN"
-                    value={formik.values.vin}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+                <p className="text-gray-500 text-lg">
+                    Enter any VIN and get a full breakdown of the vehicle, recalls, engine specs, and everything a
+                    buyer needs to know.
+                </p>
+            </div>
+
+            <div className="w-1/2">
+                <form
+                    className="checkVINForm"
+                    onSubmit={formik.handleSubmit}
+                >
+
+                    <label htmlFor="vin"> Enter VIN </label>
+                    <input
+                        id="vin"
+                        type="text"
+                        name="vin"
+                        placeholder="Enter VIN"
+                        value={formik.values.vin}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
+
+                    {
+                        formik.touched.vin && formik.errors.vin && (
+                            <p> {formik.errors.vin} </p>
+                        )
+                    }
+
+                    <button
+                        className="checkVINForm-btn"
+                        type="submit"
+                    > Check VIN </button>
+
+                </form>
 
                 {
-                    formik.touched.vin && formik.errors.vin && (
-                        <p> {formik.errors.vin} </p>
+                    loading && <p> Loading... </p>
+                }
+
+                {
+                    error && <p> {error} </p>
+                }
+
+                {
+                    // result && <p> {result.make} {result.model} {result.modelYear} </p>
+
+                    result && <VinResult results={result} />
+                }
+
+                {
+                    result && (
+                        <button onClick={() => setIsModalOpen(true)}> Save this car </button>
                     )
                 }
 
-                <button
-                    className="checkVINForm-btn"
-                    type="submit"
-                > Check VIN </button>
-
-            </form>
-
-            {
-                loading && <p> Loading... </p>
-            }
-
-            {
-                error && <p> {error} </p>
-            }
-
-            {
-                // result && <p> {result.make} {result.model} {result.modelYear} </p>
-
-                result && <VinResult results={result} />
-            }
-
-            {
-                result && (
-                    <button onClick={() => setIsModalOpen(true)}> Save this car </button>
-                )
-            }
-
-            <SaveCarModal isOpen={isModalOpen} onClose={handleCloseModal} />
+                <SaveCarModal isOpen={isModalOpen} onClose={handleCloseModal} />
+            </div>
         </div>
+
     )
 }
 
