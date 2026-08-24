@@ -5,6 +5,8 @@ import "../CSS/CheckVin.css"
 import { useState } from "react";
 import { decodeVIN } from "../services/carServices";
 import VinResult from "./VinResult";
+import SaveCarModal from "./SaveCarModal";
+import { useEffect } from "react";
 
 function CheckVin() {
 
@@ -15,6 +17,21 @@ function CheckVin() {
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
+        if (!result) return;
+
+        const timer = setTimeout(() => {
+            setIsModalOpen(true);
+        }, 15000);
+
+        return () => clearTimeout(timer);
+    }, [result])
+
+    function handleCloseModal() {
+        setIsModalOpen(false);
+    }
 
     const validateSchema = Yup.object(
         {
@@ -49,7 +66,7 @@ function CheckVin() {
     )
 
     return (
-        <div className="checkVIN">
+        <div className="checkVIN bg-white min-h-screen">
             <h1> Welcome to VIN Check page </h1>
 
             <form
@@ -94,6 +111,14 @@ function CheckVin() {
 
                 result && <VinResult results={result} />
             }
+
+            {
+                result && (
+                    <button onClick={() => setIsModalOpen(true)}> Save this car </button>
+                )
+            }
+
+            <SaveCarModal isOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
     )
 }
