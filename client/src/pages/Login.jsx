@@ -2,7 +2,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import { useState } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
+
+
 import { NavLink } from "react-router-dom";
+import { loginService } from "../services/carServices";
 
 function Login() {
 
@@ -13,6 +19,9 @@ function Login() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const validationSchema = Yup.object(
         {
@@ -35,7 +44,9 @@ function Login() {
 
 
                 try {
-                    console.log()
+                    const data = await loginService(values.email, values.password);
+                    login(data.user, data.token);
+                    navigate('/dashboard')
                 }
                 catch (error) {
                     setError(error.message || "Something went wrong")
